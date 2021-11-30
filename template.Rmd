@@ -98,22 +98,24 @@ leaflet() %>%
     popup = "popup", 
     group = "No lead"
   ) %>% 
-  addLegend(
-    position = "topright", 
-    colors = c("#7f7f7f", "#ffffff", "#00ff00"),
-    labels = c("Lead", "No information", "Not lead"),
-    title = "Legend",
-    opacity = 1
-  ) %>% 
-  addLayersControl(
-    baseGroups = c("Light", "Dark", "Street", "World"),
-    overlayGroups = c("Lead", "Lead", "No lead"),
-    options = layersControlOptions(collapsed = FALSE),
-    position = "topright"
-  ) %>% 
   flyTo(lng = mean(st_coordinates(df)[, 1]),
         lat = mean(st_coordinates(df)[, 2]), zoom = 12) %>% 
-  leaflet.extras::suspendScroll()
+  leaflet.extras::suspendScroll() %>% 
+  leaflegend::addLegendImage(
+     images = "legend.png",
+     labels = "",
+     title = htmltools::tags$div(
+       "Legend",
+       style = "font-size: 16px; text-align: center; margin-bottom: 5px;"),
+     position = "topright", 
+     orientation = "vertical", 
+     height = 165, width = 180) %>% 
+  addLayersControl(
+    overlayGroups = c("Lead", "Lead", "No lead"),
+    baseGroups = c("Light", "Dark", "Street", "World"),
+    options = layersControlOptions(collapsed = FALSE),
+    position = "topright"
+  ) 
 ```
 
 

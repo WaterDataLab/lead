@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="260"
+   height="250"
+   viewBox="0 0 68.791665 66.145835"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1.1 (c3084ef, 2021-09-22)"
+   sodipodi:docname="legend.svg"
+   inkscape:export-filename="/Users/richpauloo/Desktop/legend.png"
+   inkscape:export-xdpi="192.8546"
+   inkscape:export-ydpi="192.8546"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     units="px"
+     width="250px"
+     height="250px"
+     inkscape:zoom="2.0961538"
+     inkscape:cx="184.14679"
+     inkscape:cy="125.22936"
+     inkscape:window-width="1312"
+     inkscape:window-height="969"
+     inkscape:window-x="1824"
+     inkscape:window-y="38"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <circle
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.4;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path846"
+       cx="8.3337727"
+       cy="13.775459"
+       r="7.5726972" />
+    <circle
+       style="fill:#ffffff;stroke:#000000;stroke-width:0.4;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path846-4"
+       cx="8.2196121"
+       cy="13.965728"
+       r="4.7186656" />
+    <circle
+       style="fill:#999999;stroke:#000000;stroke-width:0.279309;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path846-4-5"
+       cx="8.7143106"
+       cy="39.784916"
+       r="3.2949147" />
+    <circle
+       style="fill:#ffffff;stroke:#000000;stroke-width:0.279309;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path846-4-5-3"
+       cx="8.7523632"
+       cy="50.456509"
+       r="3.2949147" />
+    <circle
+       style="fill:#00ff00;stroke:#000000;stroke-width:0.279309;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path846-4-5-3-5"
+       cx="8.6762571"
+       cy="60.560879"
+       r="3.2949147" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="16.363113"
+       y="7.1541061"
+       id="text1937"><tspan
+         sodipodi:role="line"
+         id="tspan1935"
+         style="font-size:4.23333px;stroke-width:0.264583"
+         x="16.363113"
+         y="7.1541061"><tspan
+   style="font-style:italic"
+   id="tspan15178">Public</tspan> service material</tspan><tspan
+         sodipodi:role="line"
+         style="font-size:4.23333px;stroke-width:0.264583"
+         x="16.363113"
+         y="12.445768"
+         id="tspan22322">     (outer circle)</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="16.515484"
+       y="21.8836"
+       id="text1937-8"><tspan
+         sodipodi:role="line"
+         id="tspan1935-4"
+         style="font-size:4.23333px;stroke-width:0.264583"
+         x="16.515484"
+         y="21.8836"><tspan
+   style="font-style:italic"
+   id="tspan16188">Private</tspan> service material</tspan><tspan
+         sodipodi:role="line"
+         style="font-size:4.23333px;stroke-width:0.264583"
+         x="16.515484"
+         y="27.175262"
+         id="tspan23098">     (inner circle)</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:2.45;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="16.550848"
+       y="41.538078"
+       id="text1937-8-3"><tspan
+         sodipodi:role="line"
+         id="tspan1935-4-0"
+         style="font-size:4.23333px;stroke-width:0.264583"
+         x="16.550848"
+         y="41.538078">Lead</tspan><tspan
+         sodipodi:role="line"
+         style="font-size:4.23333px;stroke-width:0.264583"
+         x="16.550848"
+         y="51.909737"
+         id="tspan17384">No information</tspan><tspan
+         sodipodi:role="line"
+         style="font-size:4.23333px;stroke-width:0.264583"
+         x="16.550848"
+         y="62.281395"
+         id="tspan17386">No lead</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 12.329416,9.1329009 14.993179,6.9257833"
+       id="path13179" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 9.589546,15.297609 5.708063,4.870881"
+       id="path13181" />
+  </g>
+</svg>
