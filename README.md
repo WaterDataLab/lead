@@ -6,7 +6,7 @@ A live example of the mapping template can be viewed here: [watergrid.io/lead](h
 
 ## Getting started
 
-Clone this repo, and open the RProject, `lead.Rproj`. Open `templates/template_1.Rmd` and knit the file. This generates the html map and dashboard for DC lead data.  
+Clone this repo, and open the RProject, `lead.Rproj`. Open `template.Rmd` and knit the file. This generates the html map and dashboard for DC lead data.  
 
 Ensure you have R >= 4.1.0 installed. 
 
