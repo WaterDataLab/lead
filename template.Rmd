@@ -111,13 +111,13 @@ leaflet() %>%
     options = layersControlOptions(collapsed = FALSE),
     position = "topright"
   ) %>% 
-  setView(lng = mean(st_coordinates(df)[, 1]),
-          lat = mean(st_coordinates(df)[, 2]), zoom = 12) %>% 
+  flyTo(lng = mean(st_coordinates(df)[, 1]),
+        lat = mean(st_coordinates(df)[, 2]), zoom = 12) %>% 
   leaflet.extras::suspendScroll()
 ```
 
 
-More Information
+About
 ===================================== 
 
 DC Water has historic data for the public portion of the water service line from plumbing records, service installation, and some maintenance activity that was reported to DC Water or another utility agency. Where DC Water has verified the pipe material by test pit or visual observation during a public space and/or private property service line replacement, the data source will be shown as "excavation" and is accurate as of the given inspection date. All other information is based upon historic records, but has not been confirmed. The map reflects the information DC Water has available for each active customer in the District.
