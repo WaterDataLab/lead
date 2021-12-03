@@ -4,7 +4,7 @@ output:
   flexdashboard::flex_dashboard:
     navbar:
       - { title: "Data Download", icon: "fa-download", href:  "https://www.dcwater.com/sites/default/files/cleanrivers/service-line.csv", align: right }
-    orientation: columns
+    orientation: rows
     vertical_layout: fill
     source_code: embed
 ---
@@ -15,6 +15,9 @@ library(leaflet)
 library(tidyverse)
 library(sf)
 library(leafgl)
+
+# colors
+pal <- rcartocolor::carto_pal(12, "Bold")
 
 # DC lead data
 url <- "https://www.dcwater.com/sites/default/files/cleanrivers/service-line.csv"
@@ -117,6 +120,70 @@ leaflet() %>%
     position = "topright"
   ) 
 ```
+
+
+Progress
+===================================== 
+
+Row
+-------------------------------------
+
+### **Public** replacement rate (since 2021) {.value-box}
+
+```{r}
+# value boxes
+# icons: https://ionic.io/ionicons/v2
+valueBox("31%", 
+         icon = "ion-merge", color = pal[4],
+         caption = "Public replacement rate (since 2021)")
+```
+
+### **Public** pipes replaced (since 2021) {.value-box}
+
+```{r}
+valueBox("1067 pipes", 
+         icon = "ion-merge", color = pal[4],
+         caption = "Public replacement count (since 2021)")
+```
+
+
+### **Private** replacement rate (since 2021) {.value-box}
+
+```{r}
+valueBox("17%", 
+         icon = "ion-ios-home", color = pal[5],
+         caption = "Private replacement rate (since 2021)")
+```
+
+### **Private** pipes replaced (since 2021) {.value-box}
+
+```{r}
+valueBox("584 pipes", 
+         icon = "ion-ios-home", color = pal[5],
+         caption = "Private replacement count (since 2021)")
+```
+
+Row
+-------------------------------------
+
+### **Lead pipes replaced over time**, last updated `r paste(Sys.time())`
+
+```{r}
+rates <- data.frame(
+  time  = rep(c(2019, 2020, 2021), 2),
+  count = c(2643, 1578, 1289, 874, 546, 95),
+  type  = c(rep("Public", 3), rep("Private", 3))
+)
+
+p <- ggplot(rates, aes(time, count, color = type)) +
+  geom_line() + 
+  geom_point() + 
+  scale_color_manual(values = c(pal[5], pal[4])) +
+  scale_x_continuous(breaks = 2019:2021) +
+  labs(x = "", y = "Pipes replaced", color = "Type")
+plotly::ggplotly(p)
+```
+
 
 
 About
