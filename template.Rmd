@@ -128,39 +128,39 @@ Progress
 Row
 -------------------------------------
 
-### **Public** replacement rate (since 2021) {.value-box}
+### **Public** replacement rate (since 2019) {.value-box}
 
 ```{r}
 # value boxes
 # icons: https://ionic.io/ionicons/v2
-valueBox("31%", 
+valueBox("51%", 
          icon = "ion-merge", color = pal[4],
-         caption = "Public replacement rate (since 2021)")
+         caption = "Public replacement rate (since 2019)")
 ```
 
-### **Public** pipes replaced (since 2021) {.value-box}
+### **Public** pipes replaced (since 2019) {.value-box}
 
 ```{r}
-valueBox("1067 pipes", 
+valueBox("1265 pipes", 
          icon = "ion-merge", color = pal[4],
-         caption = "Public replacement count (since 2021)")
+         caption = "Public replacement count (since 2019)")
 ```
 
 
-### **Private** replacement rate (since 2021) {.value-box}
+### **Private** replacement rate (since 2019) {.value-box}
 
 ```{r}
-valueBox("17%", 
+valueBox("89%", 
          icon = "ion-ios-home", color = pal[5],
-         caption = "Private replacement rate (since 2021)")
+         caption = "Private replacement rate (since 2019)")
 ```
 
-### **Private** pipes replaced (since 2021) {.value-box}
+### **Private** pipes replaced (since 2019) {.value-box}
 
 ```{r}
-valueBox("584 pipes", 
+valueBox("912 pipes", 
          icon = "ion-ios-home", color = pal[5],
-         caption = "Private replacement count (since 2021)")
+         caption = "Private replacement count (since 2019)")
 ```
 
 Row
