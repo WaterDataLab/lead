@@ -166,21 +166,23 @@ valueBox("584 pipes",
 Row
 -------------------------------------
 
-### **Lead pipes replaced over time**, last updated `r paste(Sys.time())`
+### **Lead pipes remaining**, last updated `r paste(Sys.time())`
 
 ```{r}
 rates <- data.frame(
   time  = rep(c(2019, 2020, 2021), 2),
   count = c(2643, 1578, 1289, 874, 546, 95),
   type  = c(rep("Public", 3), rep("Private", 3))
-)
+) %>% 
+  mutate(type = factor(type, levels = c("Public", "Private")))
 
 p <- ggplot(rates, aes(time, count, color = type)) +
   geom_line() + 
   geom_point() + 
-  scale_color_manual(values = c(pal[5], pal[4])) +
+  scale_color_manual(values = c(pal[5], pal[4]), 
+                     breaks = c("Private", "Public")) +
   scale_x_continuous(breaks = 2019:2021) +
-  labs(x = "", y = "Pipes replaced", color = "Type")
+  labs(x = "", y = "Lead Pipes Remaining", color = "Type")
 plotly::ggplotly(p)
 ```
 
