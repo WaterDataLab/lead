@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="238"
+   height="196"
+   viewBox="0 0 62.970839 51.858353"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1.1 (c3084ef, 2021-09-22)"
+   sodipodi:docname="legend2.svg"
+   inkscape:export-filename="/Users/richpauloo/Desktop/legend.png"
+   inkscape:export-xdpi="192.8546"
+   inkscape:export-ydpi="192.8546"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     units="px"
+     width="250px"
+     height="249px"
+     inkscape:zoom="2.0961538"
+     inkscape:cx="132.38532"
+     inkscape:cy="130.95413"
+     inkscape:window-width="1312"
+     inkscape:window-height="969"
+     inkscape:window-x="33"
+     inkscape:window-y="29"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <circle
+       style="fill:#ffffff;stroke:#000000;stroke-width:0.279309;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path846-4-5"
+       cx="6.5685153"
+       cy="4.5686307"
+       r="3.2949147" />
+    <ellipse
+       style="fill:#117733;fill-opacity:1;stroke:#000000;stroke-width:0.279309;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path846-4-5-3"
+       cx="6.6065679"
+       cy="14.711058"
+       rx="3.2950001"
+       ry="3.2949147" />
+    <circle
+       style="fill:#cc6677;fill-opacity:1;stroke:#000000;stroke-width:0.279309;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path846-4-5-3-5"
+       cx="6.5304618"
+       cy="25.344595"
+       r="3.2949147" />
+    <circle
+       style="fill:#ddcc77;fill-opacity:1;stroke:#000000;stroke-width:0.279309;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path846-4-5-3-5-1"
+       cx="6.5636086"
+       cy="35.72118"
+       r="3.2949147" />
+    <circle
+       style="fill:#888888;fill-opacity:1;stroke:#000000;stroke-width:0.279309;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path846-4-5-3-5-1-4"
+       cx="6.8160553"
+       cy="46.071487"
+       r="3.2949147" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:2.45;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="15.162393"
+       y="6.0693464"
+       id="text1937-8-3"><tspan
+         sodipodi:role="line"
+         id="tspan1935-4-0"
+         style="font-size:4.23333px;stroke-width:0.264583"
+         x="15.162393"
+         y="6.0693464">No Information</tspan><tspan
+         sodipodi:role="line"
+         style="font-size:4.23333px;stroke-width:0.264583"
+         x="15.162393"
+         y="16.441004"
+         id="tspan722">No Lead</tspan><tspan
+         sodipodi:role="line"
+         style="font-size:4.23333px;stroke-width:0.264583"
+         x="15.162393"
+         y="26.812662"
+         id="tspan17384">Private Lead</tspan><tspan
+         sodipodi:role="line"
+         style="font-size:4.23333px;stroke-width:0.264583"
+         x="15.162393"
+         y="37.184322"
+         id="tspan2622">Public Lead</tspan><tspan
+         sodipodi:role="line"
+         style="font-size:4.23333px;stroke-width:0.264583"
+         x="15.162393"
+         y="47.555981"
+         id="tspan17386">Private &amp; Public Lead</tspan></text>
+  </g>
+</svg>

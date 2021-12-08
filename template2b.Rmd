@@ -1,0 +1,243 @@
+---
+title: "DC Water Service Information"
+output: 
+  flexdashboard::flex_dashboard:
+    navbar:
+      - { title: "Data Download", icon: "fa-download", href:  "https://www.dcwater.com/sites/default/files/cleanrivers/service-line.csv", align: right }
+    orientation: rows
+    vertical_layout: fill
+    source_code: embed
+    css: "style.css"
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(leaflet)
+library(tidyverse)
+library(sf)
+library(leafgl)
+
+# colors
+pal <- rcartocolor::carto_pal(12, "Bold")
+
+# DC lead data
+url <- "https://www.dcwater.com/sites/default/files/cleanrivers/service-line.csv"
+
+# webgl
+df <- read_csv(url) %>% 
+  janitor::clean_names()
+
+# clean up
+df <- df %>% 
+  select(premise_address, public_service_material, 
+         private_service_material, longitude, latitude) %>% 
+  st_as_sf(coords = c("longitude", "latitude"), crs = 4326)
+
+# color points based on lead
+lead <- c("Lead_brass", "Iron with lead", "Lead and copper", 
+          "Lead", "LEAD AND COPPER", "LEAD\n", 
+          "Galvanized iron with lead")
+
+# colorblind-safe palette
+pal2 <- rcartocolor::carto_pal(name = "Safe")
+col_noinfo = "white"
+col_nolead = pal2[4] # green
+col_privatelead = pal2[2] # pink
+col_publiclead = pal2[3] # yellow
+col_alllead = pal2[12] # grey
+
+# add colors depending on if lead is present
+# green for no lead
+# orange & yellow for partial lead depending on whose side it’s on
+# red for full lead
+# white for no information 
+df <- df %>% 
+  mutate(
+    no_info = ifelse(
+      public_service_material == "No information" & 
+        private_service_material == "No information", 
+      col_noinfo, NA
+    ),
+    no_lead = ifelse(
+      ! public_service_material %in% lead & 
+        ! private_service_material %in% lead, 
+      col_nolead, NA
+    ),
+    private_lead = ifelse(
+      private_service_material %in% lead &
+        ! public_service_material %in% lead, 
+      col_privatelead, NA
+    ),
+    public_lead = ifelse(
+      public_service_material %in% lead &
+        ! private_service_material %in% lead, 
+      col_publiclead, NA
+    ),
+    all_lead = ifelse(
+      public_service_material %in% lead &
+        private_service_material %in% lead, 
+      col_alllead, NA
+    ),
+    popup = paste0(
+      "<b>Service address: </b>", premise_address, "<br>",
+      "<b>Public service material: </b>", public_service_material, "<br>",
+      "<b>Private service material: </b>", private_service_material, "<br>")
+  )
+```
+
+Map
+===================================== 
+
+
+```{r}
+# make leaflet
+leaflet() %>% 
+  # 4 basemaps
+  addProviderTiles(provider = providers$CartoDB.Positron, group = "Light") %>% 
+  addProviderTiles(provider = providers$CartoDB.DarkMatter, group = "Dark") %>% 
+  addProviderTiles(provider = providers$OpenStreetMap, group = "Street") %>% 
+  addProviderTiles(provider = providers$Esri.WorldImagery, group = "World") %>% 
+  # no info on private and public side
+  addGlPoints(
+    data = filter(df, no_info == col_noinfo),
+    fillColor = "no_info",
+    fillOpacity = 1, 
+    radius = 10, 
+    popup = "popup", 
+    group = "No Information"
+  ) %>% 
+  # no lead on public and private side
+  addGlPoints(
+    data = filter(df, no_lead == col_nolead),
+    fillColor = "no_lead",
+    fillOpacity = 1, 
+    radius = 10, 
+    popup = "popup", 
+    group = "No Lead"
+  ) %>% 
+  # private lead
+  addGlPoints(
+    data = filter(df, private_lead == col_privatelead),
+    fillColor = "private_lead",
+    fillOpacity = 1, 
+    radius = 10, 
+    popup = "popup", 
+    group = "Private Lead"
+  ) %>% 
+  # public lead
+  addGlPoints(
+    data = filter(df, public_lead == col_publiclead),
+    fillColor = "public_lead",
+    fillOpacity = 1, 
+    radius = 10, 
+    popup = "popup", 
+    group = "Public Lead"
+  ) %>% 
+  # all lead
+  addGlPoints(
+    data = filter(df, all_lead == col_alllead),
+    fillColor = "all_lead",
+    fillOpacity = 1, 
+    radius = 10, 
+    popup = "popup", 
+    group = "Private & Public Lead"
+  ) %>% 
+  flyTo(lng = mean(st_coordinates(df)[, 1]),
+        lat = mean(st_coordinates(df)[, 2]), zoom = 12) %>% 
+  leaflet.extras::suspendScroll() %>% 
+  addLayersControl(
+    baseGroups = c("Light", "Dark", "Street", "World"),
+    overlayGroups = c("No Information", "No Lead", "Private Lead", 
+                      "Public Lead", "Private & Public Lead"),
+    options = layersControlOptions(collapsed = FALSE),
+    position = "topright"
+  ) %>% 
+  leaflegend::addLegendImage(
+     images = "legend2.png",
+     labels = "",
+     title = htmltools::tags$div(
+       "Legend",
+       style = "font-size: 16px; text-align: center; margin-bottom: 5px;"),
+     position = "topright", 
+     orientation = "vertical", 
+     height = 154, width = 180)
+```
+
+
+Replacement
+===================================== 
+
+Row
+-------------------------------------
+
+### **Public** replacement rate (since 2019) {.value-box}
+
+```{r}
+# value boxes
+# icons: https://ionic.io/ionicons/v2
+valueBox("51%", 
+         icon = "ion-merge", color = pal[4],
+         caption = "Public replacement rate (since 2019)")
+```
+
+### **Public** pipes replaced (since 2019) {.value-box}
+
+```{r}
+valueBox("1265 pipes", 
+         icon = "ion-merge", color = pal[4],
+         caption = "Public replacement count (since 2019)")
+```
+
+
+### **Private** replacement rate (since 2019) {.value-box}
+
+```{r}
+valueBox("89%", 
+         icon = "ion-ios-home", color = pal[5],
+         caption = "Private replacement rate (since 2019)")
+```
+
+### **Private** pipes replaced (since 2019) {.value-box}
+
+```{r}
+valueBox("912 pipes", 
+         icon = "ion-ios-home", color = pal[5],
+         caption = "Private replacement count (since 2019)")
+```
+
+Row
+-------------------------------------
+
+### **Lead pipes remaining**, last updated `r paste(Sys.time())`
+
+```{r}
+rates <- data.frame(
+  time  = rep(c(2019, 2020, 2021), 2),
+  count = c(2643, 1578, 1289, 874, 546, 95),
+  type  = c(rep("Public", 3), rep("Private", 3))
+) %>% 
+  mutate(type = factor(type, levels = c("Public", "Private")))
+
+p <- ggplot(rates, aes(time, count, color = type)) +
+  geom_line() + 
+  geom_point() + 
+  scale_color_manual(values = c(pal[5], pal[4]), 
+                     breaks = c("Private", "Public")) +
+  scale_x_continuous(breaks = 2019:2021) +
+  labs(x = "", y = "Lead Pipes Remaining", color = "Type")
+plotly::ggplotly(p)
+```
+
+
+
+About
+===================================== 
+
+DC Water has historic data for the public portion of the water service line from plumbing records, service installation, and some maintenance activity that was reported to DC Water or another utility agency. Where DC Water has verified the pipe material by test pit or visual observation during a public space and/or private property service line replacement, the data source will be shown as "excavation" and is accurate as of the given inspection date. All other information is based upon historic records, but has not been confirmed. The map reflects the information DC Water has available for each active customer in the District.
+
+**DISCLAIMER**: The maps provided by the District of Columbia Water and Sewer Authority (“D.C. Water”) are based on historical data, information directly provided by customers, and in some cases, information acquired during physical inspections. DC Water does not guarantee the accuracy of these records and maps, which shall be used for the sole purpose of providing property owners and residents with DC Water’s best available data regarding their private water services, and not for any commercial, legal or other use. These records will be updated constantly as D.C. Water gathers additional information. D.C. Water requests that customers provide to it records of any service line replacements performed by property owners. D.C. Water reserves the right to alter, amend or terminate at any time the display of these maps and records.  
+
+For more information, visit:  
+
+- [Service Lines - Fact Sheet](https://www.dcwater.com/faq-page/74)  
+- [DC Water Lead information](https://www.dcwater.com/Lead)
