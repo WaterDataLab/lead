@@ -2,13 +2,22 @@
 title: "DC Lead Pipe Replacement"
 output: 
   flexdashboard::flex_dashboard:
+    theme: bootstrap 
+    logo: "etc/logo.svg"
+    favicon: "etc/icon.png"
     navbar:
-      - { title: "Data Download", icon: "fa-download", href:  "https://www.dcwater.com/sites/default/files/cleanrivers/service-line.csv", align: right }
+      - { title: "Map", href: "#map", align: left }
+      - { title: "About", href: "#about", align: left} 
+      - { title: "Data Download", icon: "fa-download", href:  "https://www.dcwater.com/sites/default/files/cleanrivers/service-line.csv", align: left }
+      - { title: "Source Code", icon: "fa-github", href: "https://github.com/WaterDataLab/lead", align: left, target: "_blank"}
     orientation: rows
     vertical_layout: fill
-    source_code: "https://github.com/WaterDataLab/lead"
-    css: "style.css"
+    css: "etc/style.css"
 ---
+
+<script>
+  $('.navbar-logo').wrap('<a href="https://www.watergrid.io" target="_blank">');
+</script>
 
 ```{r setup, include=FALSE}
 library(flexdashboard)
@@ -116,7 +125,7 @@ f_format_percent <- function(x){
 }
 ```
 
-Map
+Map {.hidden}
 ===================================== 
 
 Row
@@ -250,7 +259,7 @@ leaflet() %>%
 
 
 
-About
+About {.hidden}
 ===================================== 
 
 ### **Why replace lead pipes?**
