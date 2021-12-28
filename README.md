@@ -2,7 +2,12 @@
 
 We use the Washington, DC lead [data](https://www.dcwater.com/service-line-materials-dashboard) and [mapping template](https://geo.dcwater.com/Lead/) to build the examples in this repository. 
 
-A live example of the mapping template can be viewed here: [watergrid.io/lead](https://watergrid.io/lead/).  
+Four mapping templates are provided in this repo, with live demos here:
+
+- [template1a.Rmd](https://watergrid.io/lead1a/)   
+- [template1b.Rmd](https://watergrid.io/lead1b/)   
+- [template2a.Rmd](https://watergrid.io/lead2a/)   
+- [template2b.Rmd](https://watergrid.io/lead2b/)   
 
 ## Getting started
 
