@@ -1,5 +1,7 @@
 # Open source templates for mapping lead in water systems
 
+![](example.png)
+
 We use the Washington, DC lead [data](https://www.dcwater.com/service-line-materials-dashboard) and [mapping template](https://geo.dcwater.com/Lead/) to build the examples in this repository. 
 
 Four mapping templates are provided in this repo, with live demos here:
