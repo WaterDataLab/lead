@@ -1,0 +1,26 @@
+.leaflet-control-layers-list {
+  height: 250px; 
+  width: 177px;
+}
+.leaflet-control-layers-scrollbar {
+  height: 250px; 
+  width: 177px; 
+} 
+
+/* watergrid logo on right and centered */
+.navbar-logo img {
+    position: absolute;
+    right: 0px;
+    bottom: 10px;
+}
+
+/* hide logo on mobile so it doesn't overlap menu */
+@media (max-width: 767px) {
+        .navbar-logo {
+          display: none;
+        }
+        .fa-download {
+          display: none;
+        }
+      }
+      
