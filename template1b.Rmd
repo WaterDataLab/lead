@@ -1,12 +1,12 @@
 ---
-title: "DC Water Service Information"
+title: "DC Lead Pipe Replacement"
 output: 
   flexdashboard::flex_dashboard:
     navbar:
       - { title: "Data Download", icon: "fa-download", href:  "https://www.dcwater.com/sites/default/files/cleanrivers/service-line.csv", align: right }
     orientation: rows
     vertical_layout: fill
-    source_code: embed
+    source_code: "https://github.com/WaterDataLab/lead"
 ---
 
 ```{r setup, include=FALSE}
@@ -37,6 +37,12 @@ lead <- c("Lead_brass", "Iron with lead", "Lead and copper",
           "Lead", "LEAD AND COPPER", "LEAD\n", 
           "Galvanized iron with lead")
 
+# colorblind-safe palette for points
+pal_pts <- rcartocolor::carto_pal(name = "Safe")
+col_privatelead = pal_pts[2] # pink
+col_publiclead = pal_pts[3] # yellow
+
+
 # add colors depending on if lead is present
 df <- df %>% 
   mutate(
@@ -49,9 +55,9 @@ df <- df %>%
     private_lead = ifelse(private_service_material == "No information", 
                           "white", private_lead),
     popup = paste0(
-      "<b>Service address: </b>", premise_address, "<br>",
-      "<b>Public service material: </b>", public_service_material, "<br>",
-      "<b>Private service material: </b>", private_service_material, "<br>")
+      "<b>", premise_address, "</b><br>",
+      "<b>Public: </b>", public_service_material, "<br>",
+      "<b>Private: </b>", private_service_material)
   )
 ```
 
@@ -122,8 +128,16 @@ leaflet() %>%
 ```
 
 
-Replacement
+
+
+Replacement 
 ===================================== 
+
+<center>
+**VALUES MADE UP FOR DEMONSTRATION PURPOSES**
+</center>
+<br>
+
 
 Row
 -------------------------------------
@@ -134,15 +148,15 @@ Row
 # value boxes
 # icons: https://ionic.io/ionicons/v2
 valueBox("51%", 
-         icon = "ion-merge", color = pal[4],
+         icon = "ion-merge", color = col_publiclead,
          caption = "Public replacement rate (since 2019)")
 ```
 
 ### **Public** pipes replaced (since 2019) {.value-box}
 
 ```{r}
-valueBox("1265 pipes", 
-         icon = "ion-merge", color = pal[4],
+valueBox("1,265 pipes", 
+         icon = "ion-merge", color = col_publiclead,
          caption = "Public replacement count (since 2019)")
 ```
 
@@ -151,7 +165,7 @@ valueBox("1265 pipes",
 
 ```{r}
 valueBox("89%", 
-         icon = "ion-ios-home", color = pal[5],
+         icon = "ion-ios-home", color = col_privatelead,
          caption = "Private replacement rate (since 2019)")
 ```
 
@@ -159,7 +173,7 @@ valueBox("89%",
 
 ```{r}
 valueBox("912 pipes", 
-         icon = "ion-ios-home", color = pal[5],
+         icon = "ion-ios-home", color = col_privatelead,
          caption = "Private replacement count (since 2019)")
 ```
 
@@ -179,7 +193,7 @@ rates <- data.frame(
 p <- ggplot(rates, aes(time, count, color = type)) +
   geom_line() + 
   geom_point() + 
-  scale_color_manual(values = c(pal[5], pal[4]), 
+  scale_color_manual(values = c(col_privatelead, col_publiclead), 
                      breaks = c("Private", "Public")) +
   scale_x_continuous(breaks = 2019:2021) +
   labs(x = "", y = "Lead Pipes Remaining", color = "Type")
@@ -191,11 +205,29 @@ plotly::ggplotly(p)
 About
 ===================================== 
 
+### **Why replace lead pipes?**
+
+
+<iframe width="100%" height="285" src="https://www.youtube.com/embed/6DJDGtM_d5Y" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" data-external="1"></iframe>
+
+
+#### **History**
+
 DC Water has historic data for the public portion of the water service line from plumbing records, service installation, and some maintenance activity that was reported to DC Water or another utility agency. Where DC Water has verified the pipe material by test pit or visual observation during a public space and/or private property service line replacement, the data source will be shown as "excavation" and is accurate as of the given inspection date. All other information is based upon historic records, but has not been confirmed. The map reflects the information DC Water has available for each active customer in the District.
 
-**DISCLAIMER**: The maps provided by the District of Columbia Water and Sewer Authority (“D.C. Water”) are based on historical data, information directly provided by customers, and in some cases, information acquired during physical inspections. DC Water does not guarantee the accuracy of these records and maps, which shall be used for the sole purpose of providing property owners and residents with DC Water’s best available data regarding their private water services, and not for any commercial, legal or other use. These records will be updated constantly as D.C. Water gathers additional information. D.C. Water requests that customers provide to it records of any service line replacements performed by property owners. D.C. Water reserves the right to alter, amend or terminate at any time the display of these maps and records.  
+### **Disclaimer**
 
-For more information, visit:  
+The maps provided by the District of Columbia Water and Sewer Authority (“D.C. Water”) are based on historical data, information directly provided by customers, and in some cases, information acquired during physical inspections. DC Water does not guarantee the accuracy of these records and maps, which shall be used for the sole purpose of providing property owners and residents with DC Water’s best available data regarding their private water services, and not for any commercial, legal or other use. These records will be updated constantly as D.C. Water gathers additional information. D.C. Water requests that customers provide to it records of any service line replacements performed by property owners. D.C. Water reserves the right to alter, amend or terminate at any time the display of these maps and records.  
 
-- [Service Lines - Fact Sheet](https://www.dcwater.com/faq-page/74)  
-- [DC Water Lead information](https://www.dcwater.com/Lead)
+#### **More information**
+
+- <a href="https://www.dcwater.com/faq-page/74" target="_blank">Service Lines - Fact Sheet</a>  
+- <a href="https://www.dcwater.com/Lead" target="_blank">DC Water Lead information</a>
+
+
+### **Contact**
+
+* _General inquiries_: 202-787-2000  
+* _Email_: customer.service@dcwater.com  
+* _Twitter_: <a href="https://twitter.com/dcwater" target="_blank">@ dcwater</a>
+
