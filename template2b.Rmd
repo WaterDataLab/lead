@@ -1,5 +1,5 @@
 ---
-title: "DC Water Service Information"
+title: "DC Lead Pipe Replacement"
 output: 
   flexdashboard::flex_dashboard:
     navbar:
@@ -17,8 +17,22 @@ library(tidyverse)
 library(sf)
 library(leafgl)
 
-# colors
-pal <- rcartocolor::carto_pal(12, "Bold")
+# US Census poverty data
+pal_pov <- c("#b3cde3", "#8c96c6", "#4d004b")
+pov <- read_rds(here::here("data/dc_pov.rds")) %>% 
+  st_transform(4326) %>% 
+  rmapshaper::ms_simplify(keep_shapes = TRUE) %>% 
+  mutate(
+    col = case_when(
+      percent_poverty_cat == "Most advantaged" ~pal_pov[1],
+      percent_poverty_cat == "Moderately advantaged" ~pal_pov[2],
+      percent_poverty_cat == "Least advantaged" ~pal_pov[3]
+    ),
+    lab = glue::glue("<b>{percent_poverty_cat}</b> ({percent_below_fed_poverty}% below federal poverty limit)<br><i>{NAME}</i>")
+  )
+
+# colors for valueboxes
+pal_box <- rcartocolor::carto_pal(12, "Bold")
 
 # DC lead data
 url <- "https://www.dcwater.com/sites/default/files/cleanrivers/service-line.csv"
@@ -30,21 +44,26 @@ df <- read_csv(url) %>%
 # clean up
 df <- df %>% 
   select(premise_address, public_service_material, 
-         private_service_material, longitude, latitude) %>% 
-  st_as_sf(coords = c("longitude", "latitude"), crs = 4326)
+         private_service_material, longitude, latitude) %>%
+  st_as_sf(coords = c("longitude", "latitude"), crs = 4326) 
+
+# add equity data to points
+# TODO: make this file available for download 
+df <- df %>% 
+  st_join(select(pov, NAME:percent_poverty_cat))
 
 # color points based on lead
 lead <- c("Lead_brass", "Iron with lead", "Lead and copper", 
           "Lead", "LEAD AND COPPER", "LEAD\n", 
           "Galvanized iron with lead")
 
-# colorblind-safe palette
-pal2 <- rcartocolor::carto_pal(name = "Safe")
-col_noinfo = "white"
-col_nolead = pal2[4] # green
-col_privatelead = pal2[2] # pink
-col_publiclead = pal2[3] # yellow
-col_alllead = pal2[12] # grey
+# colorblind-safe palette for points
+pal_pts <- rcartocolor::carto_pal(name = "Safe")
+col_noinfo = "black"
+col_nolead = pal_pts[4] # green
+col_privatelead = pal_pts[2] # pink
+col_publiclead = pal_pts[3] # yellow
+col_alllead = pal_pts[12] # grey
 
 # add colors depending on if lead is present
 # green for no lead
@@ -54,13 +73,15 @@ col_alllead = pal2[12] # grey
 df <- df %>% 
   mutate(
     no_info = ifelse(
-      public_service_material == "No information" & 
+      public_service_material == "No information" | 
         private_service_material == "No information", 
       col_noinfo, NA
     ),
     no_lead = ifelse(
       ! public_service_material %in% lead & 
-        ! private_service_material %in% lead, 
+        ! private_service_material %in% lead &
+        public_service_material != "No information" &
+        private_service_material != "No information", 
       col_nolead, NA
     ),
     private_lead = ifelse(
@@ -78,70 +99,137 @@ df <- df %>%
         private_service_material %in% lead, 
       col_alllead, NA
     ),
+    NAME = str_remove_all(NAME, ", District of Columbia, District of Columbia"),
+    NAME = str_remove_all(NAME, "Census Tract "),
     popup = paste0(
-      "<b>Service address: </b>", premise_address, "<br>",
-      "<b>Public service material: </b>", public_service_material, "<br>",
-      "<b>Private service material: </b>", private_service_material, "<br>")
+      "<b>", premise_address, "</b><br>",
+      "<b>Public: </b>", public_service_material, "<br>",
+      "<b>Private: </b>", private_service_material, "<br>",
+      # "<b>Socioeconomic group: </b>", percent_poverty_cat, "<br>",
+      "<b>", percent_below_fed_poverty, "%</b> below federal poverty line")
   )
+
+# function to format percents
+f_format_percent <- function(x){
+  x = x * 100
+  x = round(x, 1)
+  x = formatC(x, digits = 1, format = "f")
+  x = paste(x, "%")
+  return(x)
+}
 ```
 
 Map
 ===================================== 
 
+Row
+-------------------------------------
+
+
+### No lead {.value-box}
+
+```{r}
+valueBox(f_format_percent(nrow(filter(df, !is.na(no_lead)))/nrow(df)), 
+         color = col_nolead,
+         caption = "Pipes with No lead")
+```
+
+### Private lead {.value-box}
+
+```{r}
+valueBox(f_format_percent(nrow(filter(df, !is.na(private_lead)))/nrow(df)), 
+         color = col_privatelead,
+         caption = "Pipes with Private lead")
+```
+
+### Public lead {.value-box}
+
+```{r}
+valueBox(f_format_percent(nrow(filter(df, !is.na(public_lead)))/nrow(df)), 
+         color = col_publiclead,
+         caption = "Pipes with Public lead")
+```
+
+### All lead {.value-box}
+
+```{r}
+valueBox(f_format_percent(nrow(filter(df, !is.na(all_lead)))/nrow(df)), 
+         color = col_alllead,
+         caption = "Pipes with All lead")
+```
+
+### No information {.value-box}
+
+```{r}
+valueBox(f_format_percent(nrow(filter(df, !is.na(no_info)))/nrow(df)), 
+         color = col_noinfo,
+         caption = "Pipes with No information")
+```
+
+Row
+-------------------------------------
+
+### **Lead pipes remaining**, last updated `r paste(Sys.time())`
 
 ```{r}
 # make leaflet
 leaflet() %>% 
   # 4 basemaps
-  addProviderTiles(provider = providers$CartoDB.Positron, group = "Light") %>% 
-  addProviderTiles(provider = providers$CartoDB.DarkMatter, group = "Dark") %>% 
-  addProviderTiles(provider = providers$OpenStreetMap, group = "Street") %>% 
-  addProviderTiles(provider = providers$Esri.WorldImagery, group = "World") %>% 
+  addProviderTiles(provider = providers$CartoDB.Positron) %>% 
+  addProviderTiles(provider = providers$CartoDB.DarkMatter, group = "Dark") %>%
+  addProviderTiles(provider = providers$OpenStreetMap, group = "Street") %>%
+  addProviderTiles(provider = providers$Esri.WorldImagery, group = "World") %>%
+  addGlPolygons(
+    data = pov,
+    fillColor = pov$col,
+    fillOpacity = 0.8#,
+    # popup = pov$lab
+  ) %>% 
   # no info on private and public side
   addGlPoints(
     data = filter(df, no_info == col_noinfo),
     fillColor = "no_info",
-    fillOpacity = 1, 
-    radius = 10, 
-    popup = "popup", 
+    fillOpacity = 1,
+    radius = 10,
+    popup = "popup",
     group = "No Information"
-  ) %>% 
+  ) %>%
   # no lead on public and private side
   addGlPoints(
     data = filter(df, no_lead == col_nolead),
     fillColor = "no_lead",
-    fillOpacity = 1, 
-    radius = 10, 
-    popup = "popup", 
+    fillOpacity = 1,
+    radius = 10,
+    popup = "popup",
     group = "No Lead"
-  ) %>% 
+  ) %>%
   # private lead
   addGlPoints(
     data = filter(df, private_lead == col_privatelead),
     fillColor = "private_lead",
-    fillOpacity = 1, 
-    radius = 10, 
-    popup = "popup", 
+    fillOpacity = 1,
+    radius = 10,
+    popup = "popup",
     group = "Private Lead"
-  ) %>% 
+  ) %>%
   # public lead
   addGlPoints(
     data = filter(df, public_lead == col_publiclead),
     fillColor = "public_lead",
-    fillOpacity = 1, 
-    radius = 10, 
-    popup = "popup", 
+    fillOpacity = 1,
+    radius = 10,
+    popup = "popup",
     group = "Public Lead"
-  ) %>% 
+  ) %>%
   # all lead
   addGlPoints(
     data = filter(df, all_lead == col_alllead),
     fillColor = "all_lead",
-    fillOpacity = 1, 
-    radius = 10, 
-    popup = "popup", 
+    fillOpacity = 1,
+    radius = 10,
+    popup = "popup",
     group = "Private & Public Lead"
-  ) %>% 
+  ) %>%
   flyTo(lng = mean(st_coordinates(df)[, 1]),
         lat = mean(st_coordinates(df)[, 2]), zoom = 12) %>% 
   leaflet.extras::suspendScroll() %>% 
@@ -160,7 +248,7 @@ leaflet() %>%
        style = "font-size: 16px; text-align: center; margin-bottom: 5px;"),
      position = "topright", 
      orientation = "vertical", 
-     height = 154, width = 180)
+     height = 233, width = 180)
 ```
 
 
@@ -170,6 +258,7 @@ Replacement
 <center>
 **VALUES MADE UP FOR DEMONSTRATION PURPOSES**
 </center>
+<br>
 
 
 Row
@@ -181,15 +270,15 @@ Row
 # value boxes
 # icons: https://ionic.io/ionicons/v2
 valueBox("51%", 
-         icon = "ion-merge", color = pal[4],
+         icon = "ion-merge", color = col_publiclead,
          caption = "Public replacement rate (since 2019)")
 ```
 
 ### **Public** pipes replaced (since 2019) {.value-box}
 
 ```{r}
-valueBox("1265 pipes", 
-         icon = "ion-merge", color = pal[4],
+valueBox("1,265 pipes", 
+         icon = "ion-merge", color = col_publiclead,
          caption = "Public replacement count (since 2019)")
 ```
 
@@ -198,7 +287,7 @@ valueBox("1265 pipes",
 
 ```{r}
 valueBox("89%", 
-         icon = "ion-ios-home", color = pal[5],
+         icon = "ion-ios-home", color = col_privatelead,
          caption = "Private replacement rate (since 2019)")
 ```
 
@@ -206,7 +295,7 @@ valueBox("89%",
 
 ```{r}
 valueBox("912 pipes", 
-         icon = "ion-ios-home", color = pal[5],
+         icon = "ion-ios-home", color = col_privatelead,
          caption = "Private replacement count (since 2019)")
 ```
 
@@ -226,7 +315,7 @@ rates <- data.frame(
 p <- ggplot(rates, aes(time, count, color = type)) +
   geom_line() + 
   geom_point() + 
-  scale_color_manual(values = c(pal[5], pal[4]), 
+  scale_color_manual(values = c(col_privatelead, col_publiclead), 
                      breaks = c("Private", "Public")) +
   scale_x_continuous(breaks = 2019:2021) +
   labs(x = "", y = "Lead Pipes Remaining", color = "Type")
@@ -254,12 +343,12 @@ The maps provided by the District of Columbia Water and Sewer Authority (“D.C.
 
 #### **More information**
 
-- [Service Lines - Fact Sheet](https://www.dcwater.com/faq-page/74)  
-- [DC Water Lead information](https://www.dcwater.com/Lead)
+- <a href="https://www.dcwater.com/faq-page/74" target="_blank">Service Lines - Fact Sheet</a>  
+- <a href="https://www.dcwater.com/Lead" target="_blank">DC Water Lead information</a>
 
 
 ### **Contact**
 
 * _General inquiries_: 202-787-2000  
 * _Email_: customer.service@dcwater.com  
-* _Twitter_: @dcwater
+* _Twitter_: <a href="https://twitter.com/dcwater" target="_blank">@ dcwater</a>
