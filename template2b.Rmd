@@ -31,9 +31,6 @@ pov <- read_rds(here::here("data/dc_pov.rds")) %>%
     lab = glue::glue("<b>{percent_poverty_cat}</b> ({percent_below_fed_poverty}% below federal poverty limit)<br><i>{NAME}</i>")
   )
 
-# colors for valueboxes
-pal_box <- rcartocolor::carto_pal(12, "Bold")
-
 # DC lead data
 url <- "https://www.dcwater.com/sites/default/files/cleanrivers/service-line.csv"
 
