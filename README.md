@@ -11,7 +11,7 @@ The [2021 Water Data Prize](https://www.waterdataprize.com/), a national competi
 Need web-based tools to map lead pipes and track replacement efforts. Existing effective solutions exist (e.g., DC Water site), however they:  
 
 - **are expensive**: current solutions are built with ArcGIS web tools which are proprietary, costly, and offer limited customization. Morevoer, custom tools to track replacement efforts are missing, and real-time updates to these data are likely costly if relying on re-contracting consultants or manually updating Arc storyboards  
-- **lack an equity lens**: how to prioritize most economically impacted areas?  
+- **lack an equity lens**: how to include equity into the conversation and prioritize most economically impacted areas? how to communicate the the public about this equitable approach, especially when the public may feel that certain groups may have been underserved in the past. 
 - **may not address concerns of the public**: they lack customizable public communication pages that speak to customers in a service area  
 
 ## Solution
@@ -19,7 +19,7 @@ Need web-based tools to map lead pipes and track replacement efforts. Existing e
 We present a solution that is:  
 
 - **cost effective**: open source templates are free for immediate use under MIT license. water systems may directly implement, or work with consultants to use existing designs without developing them from scratch, thereby saving budget to focus on implementation. Moreover, code-based solutions enable both highly customizable displays as the communication needs evolve, and automated update [microservices](watergrid.io) provide immediate results and dramatically reduce overall project maintenance and update costs over a multi-year project  
-- **socially-just**: visualize income groups in the tool, and allow easy data export to prioritize replacement effort by economic need  
+- **socially-just**: visualize income groups in the tool, and allow easy data export to prioritize replacement effort by economic need. Track replacement actions across the system over time to ensure equiable effort across income groups (reference COVID precedent for not allowing counties to move up a tier if they lowest group was 10% worse off than highest group). 
 - **empathetic and tailored to the local community**: provide a flexible, customizable template and public communication strategy to be applied for each water system  
 
 
