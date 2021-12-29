@@ -8,15 +8,20 @@ The [2021 Water Data Prize](https://www.waterdataprize.com/), a national competi
 
 ## Problem
 
-Need web-based tools to map lead pipes and track replacement efforts. Existing effective solutions exist (e.g., DC Water site), however:  
+Need web-based tools to map lead pipes and track replacement efforts. Existing effective solutions exist (e.g., DC Water site), however they:  
 
-- they are built with ArcGIS web solutions which are proprietary, costly, and offer limited customization  
-- custom tools to track replacement efforts are missing, and real-time updates to these data are likely costly if relying on re-contracting consultants or manually updating Arc storyboards  
+- **are expensive**: current solutions are built with ArcGIS web tools which are proprietary, costly, and offer limited customization. Morevoer, custom tools to track replacement efforts are missing, and real-time updates to these data are likely costly if relying on re-contracting consultants or manually updating Arc storyboards  
+- **lack an equity lens**: how to prioritize most economically impacted areas?  
+- **may not address concerns of the public**: they lack customizable public communication pages that speak to customers in a service area  
 
 ## Solution
 
-- open source templates are free for immediate use under MIT license. water systems may directly implement, or work with consultants to use existing designs without developing them from scratch, thereby saving budget to focus on implementation  
-- code-based solutions enable both highly customizable displays as the communication needs evolve, and automated update [microservices](watergrid.io) provide immediate results and dramatically reduce overall project maintenance and update costs over a multi-year project  
+We present a solution that is:  
+
+- **cost effective**: open source templates are free for immediate use under MIT license. water systems may directly implement, or work with consultants to use existing designs without developing them from scratch, thereby saving budget to focus on implementation. Moreover, code-based solutions enable both highly customizable displays as the communication needs evolve, and automated update [microservices](watergrid.io) provide immediate results and dramatically reduce overall project maintenance and update costs over a multi-year project  
+- **socially-just**: visualize income groups in the tool, and allow easy data export to prioritize replacement effort by economic need  
+- **empathetic and tailored to the local community**: provide a flexible, customizable template and public communication strategy to be applied for each water system  
+
 
 ## Templates
 
