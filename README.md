@@ -1,6 +1,24 @@
-# Open source templates for mapping lead in water systems
+# Open source templates for water system lead mapping & replacement tracking
 
 ![](example.png)
+
+## Background 
+
+The [2021 Water Data Prize](https://www.waterdataprize.com/), a national competition organized by the [Environmental Policy Innovation Center](https://www.policyinnovation.org/) solicited submissions for addressing lead pipes in water system infrastructure across topic areas including 
+
+## Problem
+
+Need web-based tools to map lead pipes and track replacement efforts. Existing effective solutions exist (e.g., DC Water site), however:  
+
+- they are built with ArcGIS web solutions which are proprietary, costly, and offer limited customization  
+- custom tools to track replacement efforts are missing, and real-time updates to these data are likely costly if relying on re-contracting consultants or manually updating Arc storyboards  
+
+## Solution
+
+- open source templates are free for immediate use under MIT license. water systems may directly implement, or work with consultants to use existing designs without developing them from scratch, thereby saving budget to focus on implementation  
+- code-based solutions enable both highly customizable displays as the communication needs evolve, and automated update [microservices](watergrid.io) provide immediate results and dramatically reduce overall project maintenance and update costs over a multi-year project  
+
+## Templates
 
 We use the Washington, DC lead [data](https://www.dcwater.com/service-line-materials-dashboard) and [mapping template](https://geo.dcwater.com/Lead/) to build the examples in this repository. 
 
