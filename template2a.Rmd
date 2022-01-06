@@ -8,7 +8,7 @@ output:
     navbar:
       - { title: "Map", href: "#map", align: left }
       - { title: "About", href: "#about", align: left} 
-      - { title: "Data Download", icon: "fa-download", href:  "https://raw.githubusercontent.com/WaterDataLab/lead/main/dc_lead.csv", align: left }
+      - { title: "Data Download", icon: "fa-download", href:  "https://github.com/WaterDataLab/lead/raw/main/data/dc_lead.csv", align: left }
       - { title: "Source Code", icon: "fa-github", href: "https://github.com/WaterDataLab/lead", align: left, target: "_blank"}
     orientation: rows
     vertical_layout: fill
