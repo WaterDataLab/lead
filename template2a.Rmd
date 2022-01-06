@@ -62,7 +62,7 @@ df <- df %>%
 #   mutate(x = st_coordinates(geometry)[,1],
 #          y = st_coordinates(geometry)[,2]) %>% 
 #   st_drop_geometry() %>% 
-#   write_csv(here::here("data/dc_lead.csv"))
+#   xlsx::write.xlsx(here::here("data/dc_lead.csv"))
 
 # color points based on lead
 lead <- c("Lead_brass", "Iron with lead", "Lead and copper", 
