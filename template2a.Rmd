@@ -8,7 +8,7 @@ output:
     navbar:
       - { title: "Map", href: "#map", align: left }
       - { title: "About", href: "#about", align: left} 
-      - { title: "Data Download", icon: "fa-download", href:  "https://www.dcwater.com/sites/default/files/cleanrivers/service-line.csv", align: left }
+      - { title: "Data Download", icon: "fa-download", href:  "https://raw.githubusercontent.com/WaterDataLab/lead/main/dc_lead.csv", align: left }
       - { title: "Source Code", icon: "fa-github", href: "https://github.com/WaterDataLab/lead", align: left, target: "_blank"}
     orientation: rows
     vertical_layout: fill
@@ -54,9 +54,15 @@ df <- df %>%
   st_as_sf(coords = c("longitude", "latitude"), crs = 4326) 
 
 # add equity data to points
-# TODO: make this file available for download 
 df <- df %>% 
   st_join(select(pov, NAME:percent_poverty_cat))
+
+# write for download
+# df %>% 
+#   mutate(x = st_coordinates(geometry)[,1],
+#          y = st_coordinates(geometry)[,2]) %>% 
+#   st_drop_geometry() %>% 
+#   write_csv(here::here("data/dc_lead.csv"))
 
 # color points based on lead
 lead <- c("Lead_brass", "Iron with lead", "Lead and copper", 
@@ -65,7 +71,7 @@ lead <- c("Lead_brass", "Iron with lead", "Lead and copper",
 
 # colorblind-safe palette for points
 pal_pts <- rcartocolor::carto_pal(name = "Safe")
-col_noinfo = "black"
+col_noinfo = "#202020" # dark grey
 col_nolead = pal_pts[4] # green
 col_privatelead = pal_pts[2] # pink
 col_publiclead = pal_pts[3] # yellow
@@ -136,41 +142,72 @@ Row
 
 ```{r}
 valueBox(f_format_percent(nrow(filter(df, !is.na(no_lead)))/nrow(df)), 
-         color = col_nolead,
-         caption = "Pipes with No lead")
+         color = col_nolead, icon = "far fa-circle",
+         caption = "Addresses with No lead")
 ```
 
 ### Private lead {.value-box}
 
 ```{r}
 valueBox(f_format_percent(nrow(filter(df, !is.na(private_lead)))/nrow(df)), 
-         color = col_privatelead,
-         caption = "Pipes with Private lead")
+         color = col_privatelead, icon = "far fa-circle",
+         caption = "Addresses with Private lead")
 ```
 
 ### Public lead {.value-box}
 
 ```{r}
 valueBox(f_format_percent(nrow(filter(df, !is.na(public_lead)))/nrow(df)), 
-         color = col_publiclead,
-         caption = "Pipes with Public lead")
+         color = col_publiclead, icon = "far fa-circle",
+         caption = "Addresses with Public lead")
 ```
 
 ### All lead {.value-box}
 
 ```{r}
 valueBox(f_format_percent(nrow(filter(df, !is.na(all_lead)))/nrow(df)), 
-         color = col_alllead,
-         caption = "Pipes with All lead")
+         color = col_alllead, icon = "far fa-circle",
+         caption = "Addresses with All lead")
 ```
 
 ### No information {.value-box}
 
 ```{r}
 valueBox(f_format_percent(nrow(filter(df, !is.na(no_info)))/nrow(df)), 
-         color = col_noinfo,
-         caption = "Pipes with No information")
+         color = col_noinfo, icon = "far fa-circle",
+         caption = "Addresses with No information")
 ```
+
+
+Row
+-------------------------------------
+
+
+### Most Advantaged {.value-box}
+
+```{r}
+valueBox(f_format_percent(nrow(filter(df, percent_poverty_cat == "Most advantaged"))/nrow(df)), 
+         color = pal_pov[1], icon = "fa-home",
+         caption = "Most Advantaged addresses affected")
+```
+
+### Moderately Advantaged {.value-box}
+
+```{r}
+valueBox(f_format_percent(nrow(filter(df, percent_poverty_cat == "Moderately advantaged"))/nrow(df)), 
+         color = pal_pov[2], icon = "fa-home",
+         caption = "Moderately Advantaged addresses affected")
+```
+
+### Least Advantaged {.value-box}
+
+```{r}
+valueBox(f_format_percent(nrow(filter(df, percent_poverty_cat == "Least advantaged"))/nrow(df)), 
+         color = pal_pov[3], icon = "fa-home",
+         caption = "Least Advantaged addresses affected")
+```
+
+
 
 Row
 -------------------------------------
