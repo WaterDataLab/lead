@@ -24,3 +24,15 @@
         }
       }
       
+/* value box text, caption, and icon color */
+.value-box .value {
+    color: WhiteSmoke;
+}
+
+.value-box .caption {
+    color: WhiteSmoke;
+}
+
+.value-box .icon .fa {
+    color: LightGray;
+}
