@@ -28,7 +28,7 @@ We present a solution that is:
 
 - **affordable**: the open-source templates herein are free for immediate use under the MIT license. Water systems may directly implement, or work with consultants to use existing designs without developing them from scratch, thereby saving budget to focus on implementation. Moreover, code-based solutions enable both highly customizable displays as communication needs evolve, and automated update [microservices](watergrid.io) provide immediate results to dramatically reduce overall project maintenance and update costs over a multi-year project.    
 - **socially-just**: the templates herein visualize income groups based on Census data, and allow easy data export to prioritize replacement effort by economic need. They allow users to track replacement actions across the system over time and measure equitable effort across income groups (e.g., similar to how some COVID safety measures did not allow a county to move up a "safety tier"" if COVID rates in the lowest income group were 10% more than in the highest income group). 
-- **empathetic and tailored to the local community**: the templates herein provide a flexible, customizable canvas for an evolving public communication strategy across different water systems.  
+- **empathetic and tailored to the local community**: the templates herein provide a flexible, customizable canvas for an evolving public communication strategy across different water systems. 
 
 
 ## Templates
@@ -45,6 +45,12 @@ Four mapping templates are provided in this repo, with live demos here:
 Template 1 ports over the DC Water grey/green color scheme. Template 2 uses a colorblind-safe palette to distinguish between different lead conditions, adds in equity information, and summarizes key statistics on lead pipe composition and equity.
 
 Templates ending in "a" do not track replacement efforts (in a "Replacement" tab). Templates ending in "b" have a "Replacement" tab that can be customized to report on how various lead pipe statistics change over time and as replacement efforts proceed.
+
+
+## Stakeholder Communication & Engagement Strategy
+
+[A stakeholder communication and engagement strategy](https://github.com/WaterDataLab/lead/raw/main/docs/lead_communication_strategy.pdf) is provided in this repository that outlines a 6-step process to carry out a lead replacement pipe effort. Please see the linked document for more details. 
+
 
 
 ## Getting started

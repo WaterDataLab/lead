@@ -8,7 +8,7 @@ output:
     navbar:
       - { title: "Map", href: "#map", align: left }
       - { title: "About", href: "#about", align: left} 
-      - { title: "Data Download", icon: "fa-download", href:  "https://raw.githubusercontent.com/WaterDataLab/lead/main/dc_lead.csv", align: left }
+      - { title: "Data Download", icon: "fa-download", href:  "https://github.com/WaterDataLab/lead/raw/main/data/dc_lead.csv", align: left }
       - { title: "Source Code", icon: "fa-github", href: "https://github.com/WaterDataLab/lead", align: left, target: "_blank"}
     orientation: rows
     vertical_layout: fill
@@ -57,12 +57,13 @@ df <- df %>%
 df <- df %>% 
   st_join(select(pov, NAME:percent_poverty_cat))
 
-# write for download
-# df %>% 
+# write for download, sorted by percent below poverty line
+# df %>%
 #   mutate(x = st_coordinates(geometry)[,1],
-#          y = st_coordinates(geometry)[,2]) %>% 
-#   st_drop_geometry() %>% 
-#   write_csv(here::here("data/dc_lead.csv"))
+#          y = st_coordinates(geometry)[,2]) %>%
+#   st_drop_geometry() %>%
+#   arrange(desc(percent_below_fed_poverty)) %>% 
+#   xlsx::write.xlsx(here::here("data/dc_lead.csv"))
 
 # color points based on lead
 lead <- c("Lead_brass", "Iron with lead", "Lead and copper", 
@@ -112,13 +113,25 @@ df <- df %>%
       col_alllead, NA
     ),
     NAME = str_remove_all(NAME, ", District of Columbia, District of Columbia"),
-    NAME = str_remove_all(NAME, "Census Tract "),
-    popup = paste0(
+    NAME = str_remove_all(NAME, "Census Tract ")
+  )
+
+# add popup information
+df <- df %>% 
+  mutate(popup = ifelse(
+    public_service_material == "No information" &
+      private_service_material == "No information",
+    paste0(
+      "<b>", premise_address, "</b><br>",
+      # "<b>Socioeconomic group: </b>", percent_poverty_cat, "<br>",
+      "<b>", percent_below_fed_poverty, "%</b> below federal poverty line"),
+    paste0(
       "<b>", premise_address, "</b><br>",
       "<b>Public: </b>", public_service_material, "<br>",
       "<b>Private: </b>", private_service_material, "<br>",
       # "<b>Socioeconomic group: </b>", percent_poverty_cat, "<br>",
       "<b>", percent_below_fed_poverty, "%</b> below federal poverty line")
+    )
   )
 
 # function to format percents
