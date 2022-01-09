@@ -10,7 +10,7 @@ In response to the challenges created by toxic lead water pipes, the [2021 Water
 
 Lead pipe replacement efforts are high-visibility, and may be overseen by diverse multi-stakeholder groups composed of water agencies, the public, state officials, nonprofits, and private consultants. As such, they are typically tracked and mapped over time, and this data may be shared on an online portal and via interactive maps. Some agencies have built mapping interfaces to explore and share dataa. However, existing online mapping interfaces are proprietary and hence costly and inaccessible to small to mid-sized agencies. They also do not address issues of equity or enable prioritization of lead pipe replacement for least advantaged groups.
 
-This Github repository contains open-source templates (free to use under the [MIT License](https://github.com/WaterDataLab/lead/blob/main/LICENSE)) for creating interactive, we-based lead service line maps. The MIT license allows anyone to use and modify the code herein for their own purposes, even commercial. This effectively allows the rapid proliferation of low-cost and open-source solutions. Analysts proficient in `R` can adapt any of the 4 templates provided to an area of interest and coordinate with their agency's IT department to publish the static HTML files. [Water Data Lab LCC](waterdatalab.com) developed these templates and offers implementation consulting services for data management, processing, and web-hosting on a time and materials basis and via the microservice [Watergrid](watergrid.io). Because the templates are already developed and made with free, open-source software, projects costs are dramatically reduced.
+This Github repository contains open-source templates (free to use under the [MIT License](https://github.com/WaterDataLab/lead/blob/main/LICENSE)) for creating interactive, we-based lead service line maps. The MIT license allows anyone to use and modify the code herein for their own purposes, even commercial. This effectively allows the rapid proliferation of low-cost and open-source solutions. Analysts proficient in `R` can adapt any of the 4 templates provided to an area of interest and coordinate with their agency's IT department to publish the static HTML files. [Water Data Lab LCC](waterdatalab.com) developed these templates and offers implementation consulting services for data management, processing, and web-hosting on a time and materials basis and via the [Watergrid](watergrid.io) microservice. Because the templates are already developed and made with free, open-source software, projects costs are dramatically reduced. Furthermore, we provide a [stakeholder communication and engagement strategy](https://github.com/WaterDataLab/lead/blob/main/docs/lead_communication_strategy.pdf) and offer consulting services in partnership with [Watermark Initiative](http://watermarkinitiative.com/) to direct equitable, comunity-supported lead replacement efforts.  
 
 
 ## Problem
@@ -49,8 +49,7 @@ Templates ending in "a" do not track replacement efforts (in a "Replacement" tab
 
 ## Stakeholder Communication & Engagement Strategy
 
-[A stakeholder communication and engagement strategy](https://github.com/WaterDataLab/lead/raw/main/docs/lead_communication_strategy.pdf) is provided in this repository that outlines a 6-step process to carry out a lead replacement pipe effort. Please see the linked document for more details. 
-
+[A stakeholder communication and engagement strategy](https://github.com/WaterDataLab/lead/blob/main/docs/lead_communication_strategy.pdf) is provided in this repository that outlines a 6-step process to carry out a lead replacement pipe effort. Please see the linked document for more details. 
 
 
 ## Getting started
